@@ -7,5 +7,40 @@
 </head>
 <body>
     <h1>Meteoro da Paixão</h1>
+    <form method="get">
+        <label for="selectType">Métrica de previsão</label>
+        <br>
+        <select id="selectType" name = "metric">
+            <option disabled="true">Selecione</option>
+            <option>Massa</option>
+            <option>Coordenadas</option>
+            <option>Data</option>
+        </select>
+        <br>
+        <br>
+        <br>
+        <label for="value">Classe</label>
+        <br>
+        <input type="text" id="value" name = "recclass" placeholder = "Ex: LL5">
+        <br>
+        <br>
+        <label for="value">Ano da Queda</label>
+        <br>
+        <input type="text" id="value" name = "year" placeholder = "Ex: 2001">
+        <br>
+        <br>
+        <label for="value">Latitude</label>
+        <br>
+        <input type="text" id="value" name = "reclat" placeholder = "Ex: 13.660330">
+        <br>
+        <br>
+        <label for="value">Longitude</label>
+        <br>
+        <input type="text" id="value" name = "reclong" placeholder = "Ex: 28.960000">
+        <br>
+        <br>
+        <br>
+        <button type="submit">Enviar</button>
+    </form>
 </body>
 </html>
