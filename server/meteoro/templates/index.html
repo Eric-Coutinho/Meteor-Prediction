@@ -1,72 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Meteor Prediction</title>
-</head>
-<body>
-    <h1>Meteoro da Paixão</h1>
-    <form method="get" id="meteorForm">
+    <style>
+        body {
+           display: flex; 
+           align-items: center;
+           justify-content: center;
+           background-image: url("https://conteudo.imguol.com.br/c/entretenimento/c6/2017/06/01/o-violao-e-a-cara-de-menino-ja-nao-fazem-mais-parte-do-visual-de-luan-santana-1496309922504_v2_300x300.pngx");
+           /* background-repeat: no-repeat; */
+           object-fit: cover;
+           color: white;
+        }
+    </style>
+  </head>
+  <body>
+    <audio autoplay>
+        <source src="meteoro.wav" type="audio/wav">
+    </audio>
+    <div class="page">
+      <h1>Meteoro da Paixão</h1>
+      <form method="post" target="/" id="meteorForm">
         <label for="selectType">Métrica de previsão</label>
-        <br>
+        <br />
         <select id="selectType" name="metric">
-            <option disabled="true" selected="true">Selecione</option>
-            <option value="massa">Massa</option>
-            <option value="coordenadas">Coordenadas</option>
-            <option value="data">Data</option>
+          <option disabled="true" selected="true">Selecione</option>
+          <option value="massa">Massa</option>
+          <option value="latitude">Latitude</option>
+          <option value="longitude">Longitude</option>
+          <!-- <option value="data">Data</option> -->
         </select>
-        <br>
-        <br>
+        <br />
+        <br />
         <label for="value">Classe</label>
-        <br>
-        <input type="text" id="recclass" name="recclass" placeholder="Ex: LL5">
-        <br>
-        <br>
-        <div id="dateInputs" style="display:none;">
-            <label for="value">Ano da Queda</label>
-            <br>
-            <input type="text" id="year" name="year" placeholder="Ex: 2001">
-            <br>
-            <br>
+        <br />
+        <input
+          type="text"
+          id="recclass"
+          name="recclass"
+          placeholder="Ex: LL5"
+        />
+        <br />
+        <br />
+        <div id="massInputs" style="display: none">
+          <label for="value">Massa</label>
+          <br />
+          <input type="text" id="massa" name="massa" placeholder="Ex: 700" />
+          <br />
+          <br />
         </div>
-        <div id="coordInputs" style="display:none;">
-            <label for="value">Latitude</label>
-            <br>
-            <input type="text" id="reclat" name="reclat" placeholder="Ex: 13.660330">
-            <br>
-            <br>
-            <label for="value">Longitude</label>
-            <br>
-            <input type="text" id="reclong" name="reclong" placeholder="Ex: 28.960000">
-            <br>
-            <br>
+        <div id="dateInputs" style="display: none">
+          <label for="value">Ano da Queda</label>
+          <br />
+          <input type="text" id="year" name="year" placeholder="Ex: 2001" />
+          <br />
+          <br />
         </div>
-        <br>
-        <br>
+        <div id="latInputs" style="display: none">
+          <label for="value">Latitude</label>
+          <br />
+          <input
+            type="text"
+            id="reclat"
+            name="reclat"
+            placeholder="Ex: 13.660330"
+          />
+          <br />
+          <br />
+        </div>
+        <div id="longInputs" style="display: none">
+          <label for="value">Longitude</label>
+          <br />
+          <input
+            type="text"
+            id="reclong"
+            name="reclong"
+            placeholder="Ex: 28.960000"
+          />
+          <br />
+          <br />
+        </div>
+        <br />
+        <br />
         <button type="submit">Enviar</button>
-    </form>
-
+      </form>
+      {% if answer != "" %}
+      <h1>{{answer}}</h1>
+      {% endif %}
+    </div>
     <script>
-        document.getElementById('selectType').addEventListener('change', function() {
-            var selectedOption = this.value;
-            var coordInputs = document.getElementById('coordInputs');
+      //   function callAlert() {
+      //     value = "{{ answer }}";
+      //     console.log(value);
+      //     alert(`O valor descoberto foi: ${value}`);
+      //   }
+      //   callAlert()
 
-            if (selectedOption === 'coordenadas') {
-                coordInputs.style.display = 'none';
-                dateInputs.style.display = 'block';
-            } else if (selectedOption === 'massa') {
-                coordInputs.style.display = 'block';
-                dateInputs.style.display = 'block';
-            } else if (selectedOption === 'data') {
-                dateInputs.style.display = 'none';
-                coordInputs.style.display = 'block';
-            }
-            else {
-                coordInputs.style.display = 'none';
-                dateInputs.style.display = 'none';
-            }
+      document
+        .getElementById("selectType")
+        .addEventListener("change", function () {
+          var selectedOption = this.value;
+          var coordInputs = document.getElementById("coordInputs");
+
+          if (selectedOption === "latitude") {
+            latInputs.style.display = "none";
+            longInputs.style.display = "block";
+            dateInputs.style.display = "block";
+            massInputs.style.display = "block";
+          } else if (selectedOption === "longitude") {
+            longInputs.style.display = "none";
+            latInputs.style.display = "block";
+            massInputs.style.display = "block";
+            dateInputs.style.display = "block";
+          } else if (selectedOption === "massa") {
+            longInputs.style.display = "block";
+            latInputs.style.display = "block";
+            dateInputs.style.display = "block";
+            massInputs.style.display = "none";
+          } else if (selectedOption === "data") {
+            dateInputs.style.display = "none";
+            longInputs.style.display = "block";
+            latInputs.style.display = "block";
+            massInputs.style.display = "block";
+          } else {
+            longInputs.style.display = "none";
+            latInputs.style.display = "none";
+            dateInputs.style.display = "none";
+            massInputs.style.display = "none";
+          }
         });
     </script>
-</body>
+  </body>
 </html>
